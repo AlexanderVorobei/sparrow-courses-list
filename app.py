@@ -1,5 +1,5 @@
 from app import app, db
-from app.models import Course
+from app.models import Course, Schema
 
 
 @app.shell_context_processor

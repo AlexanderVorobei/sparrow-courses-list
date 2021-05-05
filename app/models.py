@@ -1,4 +1,4 @@
-from app import db
+from app import db, ma
 from datetime import datetime
 
 
@@ -14,17 +14,15 @@ class Course(db.Model):
     
     def __init__(self, title, startdate, enddate, hours):
         self.title = title
-        self.startdate = datetime.strptime(startdate, "%Y-%m-%d").date(),
-        self.enddate = datetime.strptime(enddate, "%Y-%m-%d").date(),
+        self.startdate = datetime.strptime(startdate, "%Y-%m-%d").date()
+        self.enddate = datetime.strptime(enddate, "%Y-%m-%d").date()
         self.hours = hours
 
-    @property
-    def dict(self):
-        data = {
-            'id': self.id,
-            'title': self.title,
-            'startdate': self.startdate.isoformat() + 'Z',
-            'enddate': self.enddate.isoformat() + 'Z',
-            'hours': self.hours,
-            }
-        return data
+
+class Schema(ma.Schema):
+    class Meta:
+        fields = ('id', 'title', 'startdate', 'enddate', 'hours')
+
+
+course_schema = Schema()
+courses_schema = Schema(many=True)
